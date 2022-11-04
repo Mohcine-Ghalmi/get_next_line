@@ -6,45 +6,57 @@
 /*   By: mghalmi <mghalmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:12:03 by mghalmi           #+#    #+#             */
-/*   Updated: 2022/11/04 14:36:22 by mghalmi          ###   ########.fr       */
+/*   Updated: 2022/11/04 16:34:41 by mghalmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*line(int fd, char *fixed_buffer)
+char	*line(int fd, char *static_buffer)
 {
 	char	*buffer;
 	int		size;
 
+	size = 1;
 	buffer = (char *)malloc(sizeof(char) *  (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while (ft_strchr(buffer , '\n') == NULL)
+	while (size != 0 && ft_strchr(buffer , '\n') == NULL)
 	{
 		size = read(fd, buffer, BUFFER_SIZE);
 		buffer[size] = '\0';
-		fixed_buffer = ft_strjoin(fixed_buffer, buffer);
+		static_buffer = ft_strjoin(static_buffer, buffer);
 	}
-	return (fixed_buffer);
+	return (static_buffer);
 }
 
-char	*fixed_line(int fd, char *fixed_buffer)
+char	*fixed_line(int fd, char *static_buffer)
 {
+	int i;
+
+	i = 0;
+	static_buffer = line(fd, static_buffer);
+	while (static_buffer[i] != '\n')
+		i++;
 	
+	return (ft_substr(static_buffer, 0, i));
+}
+
+char	*get_next_line(int fd)
+{
+	char *static_buffer;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	static_buffer = fixed_line(fd, static_buffer);
+	return (static_buffer);	
 }
 
 int main()
 {
 	int fd;
-	static char * fixed_beffer;
+	char *static_buffer;
 	fd = open("text.txt" , O_RDONLY);	
-	printf("%s" , line(fd, fixed_beffer));
+	static_buffer = get_next_line(fd);
+	printf("%s\n" , static_buffer);
 }
-
-// char	*get_next_line(int fd)
-// {
-// 	if (fd < 0 || BUFFER_SIZE <= 0)
-// 		return (NULL);
-		
-// }
