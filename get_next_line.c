@@ -6,7 +6,7 @@
 /*   By: mghalmi <mghalmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:12:03 by mghalmi           #+#    #+#             */
-/*   Updated: 2022/11/06 18:37:11 by mghalmi          ###   ########.fr       */
+/*   Updated: 2022/11/06 19:38:41 by mghalmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	*next_line(char *static_buffer)
 char	*get_next_line(int fd)
 {
 	static char	*static_buffer;
-	char		*buffer;
 	char		*ln;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
