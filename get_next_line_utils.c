@@ -6,7 +6,7 @@
 /*   By: mghalmi <mghalmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:40:03 by mghalmi           #+#    #+#             */
-/*   Updated: 2022/11/06 17:29:55 by mghalmi          ###   ########.fr       */
+/*   Updated: 2022/11/06 18:36:33 by mghalmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		j;
 
 	i = 0;
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s1)
+		s1 = ft_strdup("");
 	res = (char *)malloc((sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1));
 	if (!res)
 		return (NULL);
@@ -40,8 +40,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
-    if (!s)
-        return (0);
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i])
 	i++;
@@ -70,7 +70,7 @@ char	*ft_strdup(const char *s1)
 {
 	char	*cp;
 	int		i;
-    
+
 	i = ft_strlen(s1);
 	cp = (char *) malloc((sizeof(char) * i + 1));
 	if (!cp)
@@ -85,43 +85,12 @@ char	*ft_strdup(const char *s1)
 	return (cp);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	char	*str1;
-	char	*str2;
-
-	str1 = (char *)dst;
-	str2 = (char *)src;
-	if (!dst && !src)
-		return (NULL);
-	while (n-- > 0)
-	{
-		*(str1++) = *(str2++);
-	}
-	return ((void *)dst);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t len)
-{
-	char	*dt;
-	char	*sr;
-
-	dt = (char *)dest;
-	sr = (char *)src;
-	if (!src && !dest)
-		return (NULL);
-	if (dt >= sr)
-		while (len-- > 0)
-			dt[len] = sr[len];
-	else
-		ft_memcpy(dt, sr, len);
-	return ((void *)dt);
-}
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*result;
+	int		i;
 
+	i = 0;
 	if (!s)
 		return (NULL);
 	if (ft_strlen(s) < start)
@@ -132,7 +101,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!result)
 		return (NULL);
 	result[len] = '\0';
-	result = ft_memmove(result, s + start, len);
+	while (start < len)
+		result[i++] = s[start++];
 	return (result);
 }
-

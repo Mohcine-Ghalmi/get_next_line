@@ -6,7 +6,7 @@
 /*   By: mghalmi <mghalmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:12:03 by mghalmi           #+#    #+#             */
-/*   Updated: 2022/11/06 17:17:25 by mghalmi          ###   ########.fr       */
+/*   Updated: 2022/11/06 18:37:11 by mghalmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	*new_line(int fd, char *static_buffer)
 	int		size;
 
 	size = 1;
-	buffer = (char *)malloc(sizeof(char) *  (BUFFER_SIZE + 1));
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while (size != 0 && ft_strchr(buffer , '\n') == NULL)
+	while (size != 0 && ft_strchr(buffer, '\n') == NULL)
 	{
 		size = read(fd, buffer, BUFFER_SIZE);
 		if (size == -1)
@@ -38,10 +38,13 @@ char	*new_line(int fd, char *static_buffer)
 
 char	*fixed_line(char *static_buffer)
 {
-	int 	i;
+	int		i;
 	char	*line;
+
 	i = 0;
-	while (static_buffer[i] != '\n')
+	if (!static_buffer)
+		return (NULL);
+	while (static_buffer[i] && static_buffer[i] != '\n')
 		i++;
 	line = ft_substr(static_buffer, 0, i);
 	return (line);
@@ -52,7 +55,7 @@ char	*next_line(char *static_buffer)
 	int		i;
 	int		j;
 	char	*tab;
-	
+
 	i = 0;
 	j = 0;
 	while (static_buffer[i] && static_buffer[i] != '\n')
@@ -60,11 +63,12 @@ char	*next_line(char *static_buffer)
 	if (!static_buffer[i])
 	{
 		free(static_buffer);
-		return(NULL);
+		return (NULL);
 	}
-	tab = malloc(sizeof(char) * (ft_strlen(static_buffer) - i + 1));
+	tab = (char *)malloc(sizeof(char) * (ft_strlen(static_buffer) - i + 1));
 	if (!tab)
 		return (NULL);
+	i++;
 	while (static_buffer[i])
 		tab[j++] = static_buffer[i++];
 	tab[j] = '\0';
@@ -75,7 +79,8 @@ char	*next_line(char *static_buffer)
 char	*get_next_line(int fd)
 {
 	static char	*static_buffer;
-	char	*ln;
+	char		*buffer;
+	char		*ln;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -84,18 +89,5 @@ char	*get_next_line(int fd)
 		return (NULL);
 	ln = fixed_line(static_buffer);
 	static_buffer = next_line(static_buffer);
-	return (ln);	
-}
-
-int main()
-{
-	int fd;
-	char *tab;	
-	fd = open("text.txt" , O_RDONLY);
-	tab = get_next_line(fd);
-	printf("%s\n" , tab);
-	tab = get_next_line(fd);
-	printf("%s\n" , tab);
-	tab = get_next_line(fd);
-	printf("%s\n" , tab);
+	return (ln);
 }
