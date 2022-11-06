@@ -6,7 +6,7 @@
 /*   By: mghalmi <mghalmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:40:03 by mghalmi           #+#    #+#             */
-/*   Updated: 2022/11/04 16:21:31 by mghalmi          ###   ########.fr       */
+/*   Updated: 2022/11/06 17:29:55 by mghalmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char	*ft_strdup(const char *s1)
 	cp[i] = '\0';
 	return (cp);
 }
-
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
