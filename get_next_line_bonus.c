@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mghalmi <mghalmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 10:12:03 by mghalmi           #+#    #+#             */
-/*   Updated: 2022/11/07 18:07:21 by mghalmi          ###   ########.fr       */
+/*   Created: 2022/11/07 18:08:18 by mghalmi           #+#    #+#             */
+/*   Updated: 2022/11/07 18:12:27 by mghalmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*new_line(int fd, char *static_buffer)
 {
@@ -93,14 +93,14 @@ char	*next_line(char *static_buffer)
 char	*get_next_line(int fd)
 {
 	char		*ln;
-	static char	*static_buffer;
+	static char	*static_buffer[10240];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	static_buffer = new_line(fd, static_buffer);
-	if (!static_buffer)
+	static_buffer[fd] = new_line(fd, static_buffer[fd]);
+	if (!static_buffer[fd])
 		return (NULL);
-	ln = fixed_line(static_buffer);
-	static_buffer = next_line(static_buffer);
+	ln = fixed_line(static_buffer[fd]);
+	static_buffer[fd] = next_line(static_buffer[fd]);
 	return (ln);
 }
