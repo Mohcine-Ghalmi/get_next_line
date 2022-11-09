@@ -6,7 +6,7 @@
 /*   By: mghalmi <mghalmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:12:03 by mghalmi           #+#    #+#             */
-/*   Updated: 2022/11/07 18:07:21 by mghalmi          ###   ########.fr       */
+/*   Updated: 2022/11/09 12:53:09 by mghalmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*next_line(char *static_buffer)
 		free(static_buffer);
 		return (NULL);
 	}
-	tab = (char *)malloc(sizeof(char) * (ft_strlen(static_buffer) - i + 1));
+	tab = malloc(sizeof(char) * (ft_strlen(static_buffer) - (i + 1)));
 	if (!tab)
 		return (NULL);
 	i++;
