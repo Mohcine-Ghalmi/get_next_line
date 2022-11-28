@@ -26,6 +26,7 @@ char	*new_line(int fd, char *static_buffer)
 		size = read(fd, buffer, BUFFER_SIZE);
 		if (size == -1)
 		{
+			free(static_buffer);
 			free(buffer);
 			return (NULL);
 		}
